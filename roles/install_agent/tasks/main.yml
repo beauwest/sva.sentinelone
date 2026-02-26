@@ -94,7 +94,7 @@
 
     - name: "Set endpoint URI to get the correct registration token"
       ansible.builtin.set_fact:
-        reg_token_uri: "{{ \"groups/{{ groupid }}/token\" if group is defined else \"sites/{{ siteid }}/token\" }}"
+        reg_token_uri: "{{ 'groups/' ~ groupid ~ '/token' if group is defined else 'sites/' ~ siteid ~ '/token' }}"
 
     - name: "Get registration token"
       ansible.builtin.uri:
