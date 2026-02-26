@@ -140,6 +140,6 @@
   register: registrationstatus
   delegate_to: localhost
   no_log: "{{ hide_sensitive }}"
-  until: ((registrationstatus.json.data | length) > 0) and (registrationstatus.status == 200)
+  until: (registrationstatus.json.data | default([]) | length > 0) and (registrationstatus.status | default(0) == 200)
   retries: "{{ check_console_retries }}"
   delay: "{{ check_console_retry_delay }}"
