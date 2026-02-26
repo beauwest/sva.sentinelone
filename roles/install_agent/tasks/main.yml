@@ -181,7 +181,8 @@
   delegate_to: localhost
   become: false
   no_log: "{{ install_agent_hide_sensitive }}"
-  until: ((install_agent_registrationstatus.json.data | length) > 0) and (install_agent_registrationstatus.status == 200)
+  until: ((install_agent_registrationstatus.json.data | default([]) | length) > 0) and (install_agent_registrationstatus.status | default(0) == 200)
   retries: "{{ install_agent_check_console_retries }}"
   delay: "{{ install_agent_check_console_retry_delay }}"
   when: install_agent_registration_token | length == 0
+
