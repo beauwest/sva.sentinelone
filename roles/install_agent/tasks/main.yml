@@ -31,6 +31,7 @@
       or sentinelagent_service.exists | default(false) else false }}"
 
 - name: "Download agent to localhost. Version: {{ agent_version }}"
+  become: false
   sva.sentinelone.sentinelone_download_agent:
     console_url: "{{ console_url }}"
     token: "{{ api_token }}"
@@ -47,6 +48,7 @@
 
 - name: "Block: Get registration token from API"
   run_once: true
+  become: false
   block:
     - name: "Get siteid"
       ansible.builtin.uri:
@@ -117,6 +119,7 @@
   ansible.builtin.include_tasks: "{{ custom_os_family }}.yml"
 
 - name: "Remove agent install package from localhost"
+  become: false
   ansible.builtin.file:
     path: "{{ return_download_agent.original_message.full_path }}"
     state: absent
@@ -124,6 +127,7 @@
   when: not agent_installed
 
 - name: "Fail if new client does not appear in management console"
+  become: false
   ansible.builtin.uri:
     url: "{{ api_url }}agents?siteIds={{ siteid }}&computerName={{ ansible_hostname | urlencode }}&isActive=true"
     method: GET
