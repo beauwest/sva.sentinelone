@@ -1,0 +1,19 @@
+---
+- name: Execute Modules and Roles
+  hosts: all
+  gather_facts: true
+
+  vars_files:
+    - ../vars/test_vars.yml
+
+  tasks:
+    - name: "Test S1 Modules"
+      ansible.builtin.include_tasks: tasks/test_modules.yml
+      run_once: true
+      args:
+        apply:
+          delegate_to: localhost
+          run_once: true
+
+    - name: "Test S1 Agent installation role"
+      ansible.builtin.include_tasks: tasks/test_install_agent_role.yml

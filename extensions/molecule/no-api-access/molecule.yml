@@ -1,0 +1,99 @@
+---
+scenario:
+  name: no-api-access
+
+platforms:
+  - name: ubuntu-2204
+    box: "bento/ubuntu-22.04"
+    box_architecture: "${ARCH:-amd64}"
+    memory: 2048
+    cpus: 2
+    config_options:
+      ssh.keep_alive: true
+
+  - name: ubuntu-2404
+    box: "bento/ubuntu-24.04"
+    box_architecture: "${ARCH:-amd64}"
+    memory: 2048
+    cpus: 2
+    config_options:
+      ssh.keep_alive: true
+
+  - name: rocky-8
+    box: "bento/rockylinux-8"
+    box_architecture: "amd64" # amd64 support only
+    memory: 2048
+    cpus: 2
+    config_options:
+      ssh.keep_alive: true
+
+  - name: rocky-9
+    box: "bento/rockylinux-9"
+    box_architecture: "${ARCH:-amd64}"
+    memory: 2048
+    cpus: 2
+    config_options:
+      ssh.keep_alive: true
+
+  - name: rocky-10
+    box: "bento/rockylinux-10"
+    box_architecture: "${ARCH:-amd64}"
+    memory: 2048
+    cpus: 2
+    config_options:
+      ssh.keep_alive: true
+
+  - name: opensuse-leap-160
+    box: "bento/opensuse-leap-16.0"
+    box_architecture: "${ARCH:-amd64}"
+    memory: 2048
+    cpus: 2
+    config_options:
+      ssh.keep_alive: true
+
+  - name: debian-12
+    box: "bento/debian-12"
+    box_architecture: "${ARCH:-amd64}"
+    memory: 2048
+    cpus: 2
+    config_options:
+      ssh.keep_alive: true
+
+  - name: debian-13
+    box: "bento/debian-13"
+    box_architecture: "${ARCH:-amd64}"
+    memory: 2048
+    cpus: 2
+    config_options:
+      ssh.keep_alive: true
+
+  - name: fedora-42
+    box: "bento/fedora-42"
+    box_architecture: "${ARCH:-amd64}"
+    memory: 2048
+    cpus: 2
+    config_options:
+      ssh.keep_alive: true
+
+  - name: fedora-43
+    box: "bento/fedora-43"
+    box_architecture: "${ARCH:-amd64}"
+    memory: 2048
+    cpus: 2
+    config_options:
+      ssh.keep_alive: true
+
+provisioner:
+  name: ansible
+  env:
+    ANSIBLE_TIMEOUT: "300"
+  playbooks:
+    prepare: ../default/prepare.yml
+    converge: converge.yml
+    verify: verify.yml
+    cleanup: ../default/cleanup.yml
+
+  inventory:
+    host_vars:
+      rocky-8:
+        ansible_python_interpreter: "/usr/bin/python3.12"
