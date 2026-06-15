@@ -185,4 +185,3 @@
   retries: "{{ install_agent_check_console_retries }}"
   delay: "{{ install_agent_check_console_retry_delay }}"
   when: install_agent_registration_token | length == 0
-
